@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html><body onload="getBlogPosts();">
+<style>
+.post {margin-bottom: 20px;}
+</style>
+<div id="output">content goes here</div>
+<script>
+
+const url = 'http://127.0.0.1:9999/api/posts';
+
+async function getBlogPosts() {
+  const container = document.getElementById('output')
+  container.innerHTML = ''
+
+  let data = {}
+
+  try {
+    data = await fetchBlogPosts()
+    // throw new Error('fetch error')
+    handleFetchSuccess(data, container)
+  } catch (err) {
+    container.innerHTML = 'fetch error: ' + err
+    console.log('fetch error', err)
+  }
+};
+
+async function fetchBlogPosts() {
+  const response = await fetch(url)
+  const bodyJsonPromise = response.json()
+  return bodyJsonPromise
+}
+
+function handleFetchSuccess(data, container) {
+  // if (data.stat === 'ok') {
+
+    for (let postId in data) {
+      let postText = data[postId].post
+      let div = document.createElement('div')
+      div.className = 'post'
+      div.id = 'postId' + postId
+      div.appendChild(document.createTextNode(postText))
+      container.appendChild(div)
+    }
+
+  // } else {
+  //   alert(data.message);
+  // }
+}
+
+</script>
+</body></html>
