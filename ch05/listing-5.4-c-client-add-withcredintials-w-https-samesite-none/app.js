@@ -3,8 +3,6 @@ const key = fs.readFileSync('./server.key');
 const cert = fs.readFileSync('./server.cert');
 
 var express = require('express');
-// const https1 = require('https');
-// const https2 = require('https');
 const https = require('https');
 var cookieParser = require('cookie-parser');
 
