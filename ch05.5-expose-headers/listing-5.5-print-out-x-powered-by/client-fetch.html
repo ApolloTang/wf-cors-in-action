@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><body onload="appBootstrap();">
 <style>
-.post {margin-bottom: 20px;}
+.post, .x-powered-by {margin-bottom: 20px;}
 </style>
 <div id="output">content goes here</div>
 <script>
@@ -21,9 +21,17 @@ async function blogPosts() {
     const response = await apiGetBlogPosts()
     if (response.status === 200) {
       // request was successful
+
+      // header
+      const headers = response.headers
+      const xPoweredBy = headers.get('x-powered-by')
+      console.log(xPoweredBy);
+
+      // body
       const bodyJsonPromise = response.json()
       const data = await bodyJsonPromise
-      renderBlogPosts(data)
+
+      renderBlogPosts(data, xPoweredBy)
     } else {
       throw new Error('not 200')
     }
@@ -31,9 +39,19 @@ async function blogPosts() {
     handleError(err)
   }
 
-  function renderBlogPosts(data) {
+  function renderBlogPosts(data, xPoweredBy) {
     const {container} = app
     container.innerHTML = ''
+    
+	const xpbDiv = document.createElement('div');
+    xpbDiv.className = 'x-powered-by';
+    if (xPoweredBy) {
+      xpbDiv.innerHTML = 'X-Powered-By: ' + xPoweredBy;
+      container.appendChild(xpbDiv);
+    } else {
+      xpbDiv.innerHTML = 'X-Powered-By: undefined';
+	  container.appendChild(xpbDiv);
+	}
 
     for (let postId in data) {
       let postText = data[postId].post
