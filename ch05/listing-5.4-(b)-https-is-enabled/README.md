@@ -3,7 +3,6 @@
   https://127.0.0.1:9999/login-fetch.html
 
 (2) Chrome will not accept self-assigned localhost certificate.
-
 to get around this simply click anywhere in the browser and
 type "thisisunsafe" [1]
 
@@ -18,7 +17,7 @@ After hitting return, window location will change to:
 Server will check for cookie with key "username" with value
 "owner" as a permission to delete.
 
-Buth Third party cookie is block, need to set sameSite:none
+But 3rd party cookie is block, need to set sameSite:none
 
 Note: for https to work you need to install certificate on your computer.
 
