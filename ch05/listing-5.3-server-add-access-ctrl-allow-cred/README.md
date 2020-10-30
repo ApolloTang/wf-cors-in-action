@@ -16,17 +16,10 @@ Server will check for cookie with key "username" with value
 "owner" as a permission to delete.
 
 Now server has enabled "access-ctrl-allow-cred" during preflight.
-Client will now send cookie because client has enable "withCredentials".
+However client still refuce to send cookie.
 
-This work on firefox but does not on Chrome because chrome has
-disable 3rd party cookie.
-
-To enble 3rd party cookie, you have to set sameSite:none in cookie.
-sameSite:none can only be set if it is a https request.
-
-
-
-
+This is b/c client is not enable to send cookie.
+For client to send 3rd party cookie it need to set withCredentials.
 
 
 
