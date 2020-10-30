@@ -37,7 +37,7 @@ serverapp.get('/api/posts', function(req, res) {
   res.json(POSTS);
 });
 serverapp.delete('/api/posts/:id', function(req, res) {
-  console.log('req.cookie: ', req.cookies)
+  console.log('req.cookies: ', req.cookies)
   if (req.cookies['username'] === 'owner') {
     delete POSTS[req.params.id];
     res.status(204).end();
