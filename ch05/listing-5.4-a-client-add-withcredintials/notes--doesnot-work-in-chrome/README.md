@@ -15,6 +15,9 @@ Where you can perform delete operation
 This will not work on Chrome, because chrome has disable 3rd party
 cookie.
 
+But it work on firefox
+
+
 
 
 
