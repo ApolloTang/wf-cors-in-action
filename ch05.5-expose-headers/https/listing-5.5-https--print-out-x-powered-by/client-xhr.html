@@ -23,6 +23,15 @@ var getBlogPosts = function() {
   xhr.onload = function() {
     var data = JSON.parse(xhr.responseText);
     var elem = document.getElementById('output');
+
+    var xPoweredBy = xhr.getResponseHeader('X-Powered-By');
+    if (xPoweredBy) {
+      var xpbDiv = document.createElement('div');
+      xpbDiv.className = 'post';
+      xpbDiv.innerHTML = 'X-Powered-By: ' + xPoweredBy;
+      elem.appendChild(xpbDiv);
+    }
+
     for (var postId in data) {
       var postText = data[postId]['post'];
       var div = document.createElement('div');
