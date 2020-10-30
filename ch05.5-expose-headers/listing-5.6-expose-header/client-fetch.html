@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html><body onload="appBootstrap();">
+<style>
+.post {margin-bottom: 20px;}
+</style>
+<div id="output">content goes here</div>
+<script>
+
+function appBootstrap() {
+  window.app = {
+    apiBaseUrl: 'http://127.0.0.1:9999/api/posts',
+    container: document.getElementById('output')
+  }
+  blogPosts()
+}
+
+
+
+async function blogPosts() {
+  try {
+    const response = await apiGetBlogPosts()
+    if (response.status === 200) {
+      // request was successful
+      const bodyJsonPromise = response.json()
+      const data = await bodyJsonPromise
+      renderBlogPosts(data)
+    } else {
+      throw new Error('not 200')
+    }
+  } catch (err) {
+    handleError(err)
+  }
+
+  function renderBlogPosts(data) {
+    const {container} = app
+    container.innerHTML = ''
+
+    for (let postId in data) {
+      let postText = data[postId].post
+      let div = document.createElement('div')
+      div.className = 'post'
+      div.id = 'postId' + postId
+      div.appendChild(document.createTextNode(postText))
+
+      let a = document.createElement('a')
+      a.innerHTML = 'Delete post #' + postId
+      a.href = '#'
+      a.onclick = function(postId) {
+        return () => {
+          console.log('del: ', postId)
+          deleteBlogPost(postId)
+        }
+      }(postId)
+      div.appendChild(document.createTextNode(' '))
+      div.appendChild(a)
+
+      container.appendChild(div)
+    }
+  }
+  function handleError(err) {
+    console.log('Fetch blog posts error')
+    console.log(err)
+    app.container.innerHTML = err
+  }
+};
+
+async function deleteBlogPost(postId) {
+  try {
+    const response  = await apiDeleteBlogPosts(postId)
+    if (response.status === 204) {
+      // 204 means request was successful, but body has no content
+      removePost(postId)
+    } else {
+      throw new Error('not 204')
+    }
+  } catch (err) {
+    handleError(err)
+  }
+
+  function removePost(postId) {
+    let element = document.getElementById('postId' + postId)
+    element.parentNode.removeChild(element)
+  }
+  function handleError(err) {
+    console.log('Delete blog post error')
+    console.log(err)
+  }
+}
+
+
+// -------------------
+//   api
+// -------------------
+async function apiGetBlogPosts() {
+  const customHeader = new Headers()
+  customHeader.set('Timezone-Offset',new Date().getTimezoneOffset())
+  customHeader.set('Sample-Source', 'CORS in Action')
+
+  const response = await fetch(app.apiBaseUrl, {
+    method: 'GET',
+    headers: customHeader,
+  })
+  if (response.ok) {
+    return response
+  }
+  throw new Error('not ok, '+response.statusText)
+}
+
+async function apiDeleteBlogPosts(postId) {
+  const response = await fetch( app.apiBaseUrl + '/' + postId, {
+    method: 'DELETE',
+    credentials: 'include'
+  })
+  if (response.ok) {
+    return response
+  }
+  throw new Error('not ok, '+response.statusText)
+}
+
+</script>
+</body></html>
