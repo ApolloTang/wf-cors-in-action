@@ -24,7 +24,7 @@ To enble 3rd party cookie, you have to set "sameSite:none" in cookie.
 
 ---
 
-![show vary:origin header](./listing-6.4-vary-origin-header.png?raw=true)
+![show vary:origin header](https://github.com/ApolloTang/wf-cors-in-action/blob/main/ch06/listing-6.4-vary-origin/listing-6.4-vary-origin-header.png?raw=true)
 
 
 
