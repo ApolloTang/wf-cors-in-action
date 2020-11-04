@@ -1,3 +1,4 @@
+
 (1) In Firefox goto:
 
   http://127.0.0.1:9999/login-fetch.html
@@ -21,7 +22,9 @@ disabled 3rd party cookie.
 To enble 3rd party cookie, you have to set "sameSite:none" in cookie.
 "sameSite:none" can only be set if it is a https request.
 
+---
 
+![show vary:origin header](./listing-6.4-vary-origin-header.png?raw=true)
 
 
 
