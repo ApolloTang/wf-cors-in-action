@@ -16,24 +16,11 @@ highlight
 
 Highlight of this excercise:
 The api call of the blog post collection has been redirected
+But this time it is a x-origin redirect (developer.mozilla.org)
 
 open network inspector to see 301
+Observe that Origin has been set to 'null'
 
-
-------------------------------------
-existing functions from listing-5.6
-------------------------------------
-
-You can perform delete operation.
-
-Server will check for cookie with key value pair of "username=owner"
-as a permission perform delete operation.
-
-This works on Firefox but does not on Chrome because Chrome has
-disabled 3rd party cookie.
-
-To enble 3rd party cookie, you have to set "sameSite:none" in cookie.
-"sameSite:none" can only be set if it is a https request.
 
 
 
